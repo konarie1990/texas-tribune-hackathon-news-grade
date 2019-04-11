@@ -9,23 +9,23 @@ import {
   Divider
 } from "semantic-ui-react";
 
-// Pass getRefs into onChange, mount component, handle submit and return data
-const getRefs = url => {
-  let base =
-    "https://www.googleapis.com/customsearch/v1?key=AIzaSyB0zqGyHNgmUiWdm9CiofUIldNjhr2jhfM&cx=012673784411427794478:licl7tpt11a&q=";
-  fetch(base + "intext: " + url).then(res => {
-    res.json().then(data => {
-      let items = data["items"].map(r => r.link);
-      let total = data["queries"]["request"][0]["totalResults"];
-      document.getElementById("output").innerHTML = total.toString();
-      console.log("Total is " + total);
-      console.log(items);
-    });
-  });
-};
-
 class LoginForm extends Component {
   state = { name: "", submittedName: "" };
+  // Pass getRefs into onChange, mount component, handle submit and return data
+  getRefs = url => {
+    let base =
+      "https://www.googleapis.com/customsearch/v1?key=AIzaSyB0zqGyHNgmUiWdm9CiofUIldNjhr2jhfM&cx=012673784411427794478:licl7tpt11a&q=?intext:https://www.texastribune.org/2019/04/03/texas-ban-chaplains-execution-chamber-death-row/";
+    fetch(base + "intext: " + url).then(res => {
+      res.json().then(data => {
+        let items = data["items"].map(r => r.link);
+        let total = data["queries"]["request"][0]["totalResults"];
+        document.getElementById("output").innerHTML = total.toString();
+        console.log("Total is " + total);
+        console.log(items);
+      });
+    });
+    console.log(this.getRefs);
+  };
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
